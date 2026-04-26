@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WASP — Water Analysis Satellite Program</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo-icon">🐝</span>
+    <div>
+      <span class="logo-text">WASP</span>
+      <span class="logo-tagline">Water Analysis Satellite Program</span>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-chip" id="stat-events">
+      <span class="stat-label">Events</span>
+      <span class="stat-value" id="val-events">—</span>
+    </div>
+    <div class="stat-chip" id="stat-alerts">
+      <span class="stat-label">Alerts</span>
+      <span class="stat-value" id="val-alerts">—</span>
+    </div>
+    <div class="stat-chip" id="stat-zones">
+      <span class="stat-label">Zones</span>
+      <span class="stat-value" id="val-zones">—</span>
+    </div>
+    <div class="stat-chip" id="stat-buoys">
+      <span class="stat-label">Buoys</span>
+      <span class="stat-value" id="val-buoys">—</span>
+    </div>
+  </div>
+  <div class="header-status">
+    <span class="status-dot" id="status-dot"></span>
+    <span class="status-text" id="status-text">Connecting…</span>
+  </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Filters -->
+    <section class="sidebar-section">
+      <h3 class="section-title">Pollution Type</h3>
+      <div class="filter-group">
+        <label class="filter-item">
+          <input type="checkbox" class="type-filter" value="OIL_SPILL" checked />
+          <span class="filter-dot oil"></span> Oil Spill
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="type-filter" value="ALGAL_BLOOM" checked />
+          <span class="filter-dot algae"></span> Algal Bloom
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="type-filter" value="HYDROCARBON" checked />
+          <span class="filter-dot hydro"></span> Hydrocarbon
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="type-filter" value="MARINE_DEBRIS" checked />
+          <span class="filter-dot debris"></span> Marine Debris
+        </label>
+      </div>
+    </section>
+
+    <section class="sidebar-section">
+      <h3 class="section-title">Severity</h3>
+      <div class="severity-group">
+        <button class="sev-btn active" data-sev="ALL">ALL</button>
+        <button class="sev-btn" data-sev="MEDIUM">MED+</button>
+        <button class="sev-btn" data-sev="HIGH">HIGH+</button>
+        <button class="sev-btn" data-sev="CRITICAL">CRIT</button>
+      </div>
+    </section>
+
+    <!-- Buoy filter -->
+    <section class="sidebar-section">
+      <h3 class="section-title">IoT Buoy Network</h3>
+      <div class="filter-group">
+        <label class="filter-item">
+          <input type="checkbox" id="buoy-show" checked />
+          <span class="filter-dot buoy"></span> Show buoys on map
+        </label>
+      </div>
+      <div class="buoy-legend">
+        <span class="buoy-state-dot up"></span> Up &nbsp;
+        <span class="buoy-state-dot down"></span> Down &nbsp;
+        <span class="buoy-state-dot replace"></span> Replace
+      </div>
+    </section>
+
+    <!-- Alerts list -->
+    <section class="sidebar-section alerts-section">
+      <h3 class="section-title">Recent Alerts</h3>
+      <div class="alerts-list" id="alerts-list">
+        <div class="loading-placeholder">Loading alerts…</div>
+      </div>
+    </section>
+
+    <div class="sidebar-footer">
+      <button class="subscribe-btn" id="subscribe-btn">🔔 Subscribe to Alerts</button>
+      <div class="powered-by">Powered by Copernicus + Galileo</div>
+    </div>
+
+  </aside>
+
+  <!-- MAP -->
+  <main class="map-container">
+    <div id="map"></div>
+
+    <!-- offline banner -->
+    <div class="offline-banner" id="offline-banner" style="display:none;">
+      ⚠️ Backend offline — showing demo data
+    </div>
+  </main>
+</div>
+
+<!-- EVENT DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <button class="detail-close" id="detail-close">✕</button>
+  <div class="detail-content" id="detail-content"></div>
+</div>
+
+<!-- SUBSCRIBE MODAL -->
+<div class="modal-overlay" id="modal-overlay" style="display:none;">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <h2>Subscribe to Alerts</h2>
+    <form id="subscribe-form">
+      <label>Email address
+        <input type="email" id="sub-email" placeholder="you@example.com" required />
+      </label>
+      <label>Minimum severity
+        <select id="sub-severity">
+          <option value="LOW">Low (all events)</option>
+          <option value="MEDIUM" selected>Medium+</option>
+          <option value="HIGH">High+</option>
+          <option value="CRITICAL">Critical only</option>
+        </select>
+      </label>
+      <button type="submit" class="submit-btn">Subscribe</button>
+    </form>
+    <div class="modal-success" id="modal-success" style="display:none;">
+      ✅ Subscribed! You'll receive alerts for your zones.
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/map.js"></script>
+<script src="js/alerts.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
