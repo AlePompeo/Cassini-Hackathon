@@ -348,3 +348,7 @@ Under AGPL-3.0, anyone who deploys a modified version of this software as a netw
 ---
 
 *AquaGuard — WASP · Cassini Hackathon #2 · April 2026*
+
+---
+
+*Keywords: Cassini Hackathon, Copernicus, Sentinel-1, Sentinel-2, marine pollution, oil spill detection, IoT buoys, Kinéis, FastAPI, Mediterranean, Earth observation.*
